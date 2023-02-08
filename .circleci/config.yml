@@ -5,8 +5,11 @@ orbs:
 
 executors:
   mac:
+    parameters:
+      xcode:
+        type: string
     macos:
-      xcode: 14.1.0
+      xcode: << parameters.xcode >>
       resource_class: macos.x86.medium.gen2
 commands:
   capture:
@@ -21,7 +24,12 @@ commands:
           path: captured_<< parameters.after >>.png
 jobs:
   screencapture:
-    executor: mac
+    parameters:
+      xcode:
+        type: string
+    executor:
+      name: mac
+      xcode: << parameters.xcode >>
     steps:
       - macos/add-uitest-permissions
       - macos/add-permission:
@@ -36,4 +44,9 @@ jobs:
 workflows:
   main:
     jobs:
-      - screencapture
+      - screencapture:
+          matrix:
+            parameters:
+              xcode:
+                - '14.1.0'
+                - '13.4.1'
