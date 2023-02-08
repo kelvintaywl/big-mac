@@ -19,7 +19,7 @@ commands:
         default: 60
     steps:
       - run: sleep << parameters.after >>
-      - run: screencapture -m -D 1 -C captured_<< parameters.after >>.png
+      - run: screencapture -C captured_<< parameters.after >>.png
       - store_artifacts:
           path: captured_<< parameters.after >>.png
 jobs:
