@@ -1,37 +1,38 @@
 version: 2.1
 
-commands:
-  inspect-bash-profile:
-    steps:
-      - run:
-          name: cat BASH profile
-          command: |
-            cat -e $HOME/.bash_profile
+orbs:
+  node: circleci/node@5
 
 jobs:
-  burger:
+  node-install:
     parameters:
       xcode:
         type: string
-        default: 13.2.0
+        default: "14.2.0"
+      size:
+        type: integer
+        default: 5
+      use_http_1:
+        type: boolean
+        default: false
     macos:
       xcode: << parameters.xcode >>
     steps:
-      - inspect-bash-profile
-      - run:
-          name: Add Newline
-          command: |
-            printf "\n" >> $HOME/.bash_profile
-      - inspect-bash-profile
+      - when:
+          condition: << parameters.use_http_1 >>
+          steps:
+            # enforce HTTP/1.1
+            # see https://blog.csdn.net/MRlaochen/article/details/125381478
+            - run: git config --global http.version HTTP/1.1
+      - node/install:
+          node-version: "16.13"
 
 workflows:
   main:
     jobs:
-      - burger:
+      - node-install:
           matrix:
             parameters:
-              # See https://circleci.com/docs/2.0/testing-ios/#supported-xcode-versions
-              xcode:
-                - 13.2.1
-                - 12.5.1
-                - 11.7.0
+              use_http_1:
+                - true
+                - false
