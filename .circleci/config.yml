@@ -17,6 +17,7 @@ jobs:
         default: false
     macos:
       xcode: << parameters.xcode >>
+    parallelism: << parameters.size >>
     steps:
       - when:
           condition: << parameters.use_http_1 >>
