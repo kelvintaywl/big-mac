@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  dummy: kelvintaywl/dummy-private@0.1.0
+
 commands:
   inspect-bash-profile:
     steps:
@@ -27,11 +30,4 @@ jobs:
 workflows:
   main:
     jobs:
-      - burger:
-          matrix:
-            parameters:
-              # See https://circleci.com/docs/2.0/testing-ios/#supported-xcode-versions
-              xcode:
-                - 13.2.1
-                - 12.5.1
-                - 11.7.0
+      - burger
