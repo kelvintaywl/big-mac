@@ -16,16 +16,10 @@ jobs:
     parameters:
       xcode:
         type: string
-        default: 13.2.0
     macos:
       xcode: << parameters.xcode >>
     steps:
-      - inspect-bash-profile
-      - run:
-          name: Add Newline
-          command: |
-            printf "\n" >> $HOME/.bash_profile
-      - inspect-bash-profile
+      - dummy/greet
 
 workflows:
   main:
