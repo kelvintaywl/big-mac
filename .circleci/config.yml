@@ -27,12 +27,7 @@ jobs:
       xcode: << parameters.xcode >>
     resource_class: << parameters.resource >>
     steps:
-      - inspect-bash-profile
-      - run:
-          name: Add Newline
-          command: |
-            printf "\n" >> $HOME/.bash_profile
-      - inspect-bash-profile
+      - check-spec
 
 workflows:
   main:
