@@ -13,6 +13,7 @@ jobs:
       xcode: << parameters.xcode >>
     resource_class: macos.x86.medium.gen2
     steps:
+      - run: which node && node -v
       - run:
           name: install npm
           command: |
@@ -28,7 +29,11 @@ jobs:
           name: check
           command: |
             node -v
+            which node
+
             npm -v
+            which npm
+
             nvm -v
 
 workflows:
