@@ -1,21 +1,31 @@
 version: 2.1
 
 commands:
-  inspect-bash-profile:
+  check-spec:
     steps:
       - run:
-          name: cat BASH profile
-          command: |
-            cat -e $HOME/.bash_profile
+          name: check OS
+          command: uname
+      - run:
+          name: check arch
+          command: uname -m
 
 jobs:
   burger:
     parameters:
       xcode:
         type: string
-        default: 13.2.0
+        default: 14.2.0
+      resource:
+        # https://circleci.com/docs/using-macos/#available-resource-classes
+        type: enum
+        enum:
+          - macos.x86.medium.gen2
+          - macos.m1.large.gen1
+        default: macos.x86.medium.gen2
     macos:
       xcode: << parameters.xcode >>
+    resource_class: << parameters.resource >>
     steps:
       - inspect-bash-profile
       - run:
@@ -30,8 +40,6 @@ workflows:
       - burger:
           matrix:
             parameters:
-              # See https://circleci.com/docs/2.0/testing-ios/#supported-xcode-versions
-              xcode:
-                - 13.2.1
-                - 12.5.1
-                - 11.7.0
+              resource:
+                - macos.m1.large.gen1
+                - macos.x86.medium.gen2
