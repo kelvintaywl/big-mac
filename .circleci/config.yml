@@ -8,33 +8,30 @@ jobs:
     parameters:
       xcode:
         type: string
-        default: "14.2.0"
-      size:
-        type: integer
-        default: 5
-      use_http_1:
-        type: boolean
-        default: false
+        default: "12.5.1"
     macos:
       xcode: << parameters.xcode >>
     resource_class: macos.x86.medium.gen2
-    parallelism: << parameters.size >>
     steps:
-      - when:
-          condition: << parameters.use_http_1 >>
-          steps:
-            # enforce HTTP/1.1
-            # see https://blog.csdn.net/MRlaochen/article/details/125381478
-            - run: git config --global http.version HTTP/1.1
-      - node/install:
-          node-version: "16.13"
+      - run:
+          name: install npm
+          command: |
+            echo "export YARN_VERSION=1.22.5" >> $BASH_ENV
+            echo "export NODE_VERSION=14.17.5" >> $BASH_ENV
+            curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.37.2/install.sh | bash
+            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+            echo 'nvm install $NODE_VERSION' >> $BASH_ENV
+            echo 'nvm use $NODE_VERSION' >> $BASH_ENV
+            echo 'nvm alias default $NODE_VERSION' >> $BASH_ENV
+      - run:
+          name: check
+          command: |
+            node -v
+            npm -v
+            nvm -v
 
 workflows:
   main:
     jobs:
-      - node-install:
-          matrix:
-            parameters:
-              use_http_1:
-                - true
-                - false
+      - node-install
