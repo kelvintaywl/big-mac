@@ -22,6 +22,7 @@ jobs:
         enum:
           - macos.x86.medium.gen2
           - macos.m1.large.gen1
+          - large
         default: macos.x86.medium.gen2
     macos:
       xcode: << parameters.xcode >>
@@ -38,3 +39,4 @@ workflows:
               resource:
                 - macos.m1.large.gen1
                 - macos.x86.medium.gen2
+                - large
