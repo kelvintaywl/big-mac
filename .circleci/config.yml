@@ -34,9 +34,11 @@ workflows:
   main:
     jobs:
       - burger:
-          matrix:
-            parameters:
-              resource:
-                - macos.m1.large.gen1
-                - macos.x86.medium.gen2
-                - large
+          xcode: 12.5.1
+          resource: large
+#           matrix:
+#             parameters:
+#               resource:
+#                 - macos.m1.large.gen1
+#                 - macos.x86.medium.gen2
+#                 - large
