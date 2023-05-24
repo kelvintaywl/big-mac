@@ -9,13 +9,19 @@ commands:
       - run:
           name: check arch
           command: uname -m
+      - run:
+          name: check Node
+          command: which node && node -v
+      - run:
+          name: check Python
+          command: which python && python --version
 
 jobs:
   burger:
     parameters:
       xcode:
         type: string
-        default: 14.2.0
+        default: 12.5.1
       resource:
         # https://circleci.com/docs/using-macos/#available-resource-classes
         type: enum
@@ -34,11 +40,10 @@ workflows:
   main:
     jobs:
       - burger:
-          xcode: 12.5.1
-          resource: large
-#           matrix:
-#             parameters:
-#               resource:
-#                 - macos.m1.large.gen1
-#                 - macos.x86.medium.gen2
-#                 - large
+          matrix:
+            parameters:
+              resource:
+                - macos.x86.medium.gen2
+                - large
+              xcode:
+                - 12.5.1
