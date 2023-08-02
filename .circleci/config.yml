@@ -18,9 +18,10 @@ commands:
             which python && python --version
             which python3 && python3 --version
       - run:
-          name: determine SSH logs
+          name: check Ruby
           command: |
-            cat /var/log/system.log | grep sshd
+            ruby --version
+            bundler --version
 
 jobs:
   burger:
@@ -53,4 +54,4 @@ workflows:
                 - macos.x86.medium.gen2
                 - medium
               xcode:
-                - 14.3.1
+                - 13.0.0
