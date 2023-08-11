@@ -1,57 +1,22 @@
 version: 2.1
 
-commands:
-  check-spec:
+jobs:
+  python:
+    macos:
+      xcode: 14.3.1
+    resource_class: macos.m1.medium.gen1
     steps:
-      - run:
-          name: check OS
-          command: uname
-      - run:
-          name: check arch
-          command: uname -m
-      - run:
-          name: check Node
-          command: which node && node -v
+      - run: which pyenv
       - run:
           name: check Python
           command: |
-            which python && python --version
-            which python3 && python3 --version
-      - run:
-          name: check Ruby
-          command: |
-            ruby --version
-            bundler --version
-
-jobs:
-  burger:
-    parameters:
-      xcode:
-        type: string
-        default: 12.5.1
-      resource:
-        # https://circleci.com/docs/using-macos/#available-resource-classes
-        type: enum
-        enum:
-          - macos.x86.medium.gen2
-          - macos.m1.large.gen1
-          - medium
-          - large
-        default: macos.x86.medium.gen2
-    macos:
-      xcode: << parameters.xcode >>
-    resource_class: << parameters.resource >>
-    steps:
-      - check-spec
+            # should be 3.11.3
+            which python
+            python --version
+      - run: pyenv global 3.11.3
+      - run: python --version
 
 workflows:
   main:
     jobs:
-      - burger:
-          matrix:
-            parameters:
-              resource:
-                - macos.x86.medium.gen2
-                - medium
-              xcode:
-                - 13.0.0
+      - python
