@@ -13,8 +13,22 @@ jobs:
             # should be 3.11.3
             which python
             python --version
-      - run: pyenv global 3.11.3
-      - run: python --version
+      - run:
+          name: check Python3
+          command: |
+            which python3
+            python3 --version
+      - run:
+          name: run Python script
+          # NOTE: important to use python, not python3
+          shell: '/usr/bin/env python'
+          command: |
+            import sys
+
+            print("Python version")
+            print (sys.version)
+            print("Version info.")
+            print (sys.version_info)
 
 workflows:
   main:
