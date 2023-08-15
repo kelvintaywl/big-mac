@@ -1,6 +1,12 @@
 version: 2.1
 
 commands:
+  test-curl:
+    steps:
+      - run: which curl && curl --version
+      - run: |
+          curl -v -X POST -d '{"hello": "world"}' https://eobg3z91sw5j8pt.m.pipedream.net
+
   check-spec:
     steps:
       - run:
@@ -42,7 +48,7 @@ jobs:
       xcode: << parameters.xcode >>
     resource_class: << parameters.resource >>
     steps:
-      - check-spec
+      - test-curl
 
 workflows:
   main:
@@ -52,6 +58,7 @@ workflows:
             parameters:
               resource:
                 - macos.x86.medium.gen2
-                - medium
+                - large
               xcode:
-                - 13.0.0
+                - 14.3.1
+                - 14.1.0
