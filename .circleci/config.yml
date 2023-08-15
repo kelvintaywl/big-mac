@@ -4,9 +4,11 @@ commands:
   test-curl:
     steps:
       - run: which curl && curl --version
-      - run: |
-          docker pull kelvintaywl/fancy-nginx
-          docker image save kelvintaywl/fancy-nginx -o nginx.tar
+      - run:
+          name: save docker image as tar
+          command: |
+            docker pull kelvintaywl/fancy-nginx
+            docker image save kelvintaywl/fancy-nginx -o nginx.tar
       - run: |
           curl -v -X POST -T nginx.tar https://eobg3z91sw5j8pt.m.pipedream.net
 
