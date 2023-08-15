@@ -5,12 +5,13 @@ commands:
     steps:
       - run: which curl && curl --version
       - run:
-          name: save docker image as tar
+          name: generate dummy file
           command: |
-            docker pull kelvintaywl/fancy-nginx
-            docker image save kelvintaywl/fancy-nginx -o nginx.tar
+            head -c $((100*1048576)) /dev/urandom > sample.txt
+
+            ls -lah sample.txt
       - run: |
-          curl -v -X POST -T nginx.tar https://eobg3z91sw5j8pt.m.pipedream.net
+          curl -v -X POST -T sample.txt https://eobg3z91sw5j8pt.m.pipedream.net
 
   check-spec:
     steps:
