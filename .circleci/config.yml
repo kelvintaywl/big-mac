@@ -58,5 +58,6 @@ workflows:
             parameters:
               resource:
                 - macos.m1.medium.gen1
+                - macos.x86.medium.gen2
               xcode:
                 - 13.4.1
