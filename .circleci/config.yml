@@ -4,6 +4,11 @@ commands:
   check-spec:
     steps:
       - run:
+          name: check git
+          command: |
+            git version
+            git lfs version
+      - run:
           name: check OS
           command: uname
       - run:
@@ -35,6 +40,7 @@ jobs:
         enum:
           - macos.x86.medium.gen2
           - macos.m1.large.gen1
+          - macos.m1.medium.gen1
           - medium
           - large
         default: macos.x86.medium.gen2
@@ -51,7 +57,6 @@ workflows:
           matrix:
             parameters:
               resource:
-                - macos.x86.medium.gen2
-                - medium
+                - macos.m1.medium.gen1
               xcode:
-                - 13.0.0
+                - 13.4.1
