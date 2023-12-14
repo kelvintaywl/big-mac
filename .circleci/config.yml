@@ -7,7 +7,7 @@ jobs:
         type: string
         default: '3.2.0'
     macos:
-      xcode: 12.5.1
+      xcode: 14.2.0
     resource_class: macos.m1.large.gen1
     steps:
       - run:
