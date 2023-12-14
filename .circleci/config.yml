@@ -34,6 +34,9 @@ jobs:
             EOL
       - run: cat main.tf
       - run: terraform init
+      - run:
+          name: inspect installed provider
+          command: ls -lah .terraform/providers/registry.terraform.io/hashicorp/tls/<< parameters.tls-version >>/darwin_arm64
 
 workflows:
   main:
