@@ -1,6 +1,23 @@
 version: 2.1
 
+orbs:
+  macos: circleci/macos@2.3.6
+
 commands:
+  selenium-webdriver:
+    steps:
+      - run: defaults write com.apple.Safari IncludeDevelopMenu 1
+      # - run: defaults write com.apple.Safari BlockStoragePolicy 1
+      - run: sudo safaridriver --enable
+      - macos/add-permission:
+          bundle-id: com.apple.Terminal
+          permission-type: kTCCServiceAppleEvents
+      - macos/add-safari-permissions
+      - run: safaridriver --version
+      - run: ruby -v
+      - checkout
+      - run: bundle install
+      - run: bundle exec ruby reproduce.rb
   check-spec:
     steps:
       - run:
@@ -39,14 +56,12 @@ jobs:
           - macos.x86.medium.gen2
           - macos.m1.medium.gen1
           - macos.m1.large.gen1
-          - medium
-          - large
         default: macos.x86.medium.gen2
     macos:
       xcode: << parameters.xcode >>
     resource_class: << parameters.resource >>
     steps:
-      - check-spec
+      - selenium-webdriver
 
 workflows:
   main:
@@ -56,7 +71,6 @@ workflows:
             parameters:
               resource:
                 - macos.x86.medium.gen2
-                - medium
                 - macos.m1.medium.gen1
               xcode:
                 - 14.3.1
