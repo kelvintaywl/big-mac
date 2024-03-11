@@ -55,8 +55,8 @@ workflows:
           matrix:
             parameters:
               resource:
-                - macos.x86.medium.gen2
-                - medium
+                # - macos.x86.medium.gen2
+                # - medium
                 - macos.m1.medium.gen1
               xcode:
-                - 14.3.1
+                - 15.3.0
