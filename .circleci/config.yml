@@ -1,6 +1,24 @@
 version: 2.1
 
 commands:
+  switch-ruby-version:
+    steps:
+      - run:
+          name: show pre-installed Ruby details
+          command: |
+            ruby --version
+            which ruby
+      - run:
+          name: list available Ruby versions on rbenv
+          command: rbenv versions
+      - run:
+          name: switch Ruby version
+          command: rbenv global 3.2.2
+      - run:
+          name: show updated Ruby details
+          command: |
+            ruby --version
+            which ruby
   check-spec:
     steps:
       - run:
@@ -46,7 +64,8 @@ jobs:
       xcode: << parameters.xcode >>
     resource_class: << parameters.resource >>
     steps:
-      - check-spec
+      # - check-spec
+      - switch-ruby-version
 
 workflows:
   main:
