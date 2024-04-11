@@ -1,6 +1,25 @@
 version: 2.1
 
 commands:
+  add-password-to-keychain:
+    steps:
+      - run: whoami
+      - run:
+          name: list keychains
+          command: |
+            security list-keychains
+      - run:
+          name: see default keychain
+          command: |
+            security default-keychain
+      - run:
+          name: set password in default keychain
+          command: |
+            security add-generic-password -a $(whoami) -s 'Eden Account Password' -w "fooBar1234"
+      - run:
+          name: verify password
+          command: |
+            security find-generic-password -a $(whoami) -s "Eden Account Password"  
   switch-ruby-version:
     steps:
       - run:
@@ -65,7 +84,8 @@ jobs:
     resource_class: << parameters.resource >>
     steps:
       # - check-spec
-      - switch-ruby-version
+      # - switch-ruby-version
+      - add-password-to-keychain
 
 workflows:
   main:
