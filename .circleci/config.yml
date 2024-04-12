@@ -12,6 +12,7 @@ jobs:
             GEM_PATH: tmp/bundle
           name: install deps
           command: |
+            #!/bin/bash
             bundle config set --local path $GEM_PATH
             bundle check || bundle install
       - run:
