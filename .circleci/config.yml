@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           environment:
-            GEM_PATH: tmp/bundle
+            GEM_PATH: /tmp/bundle
           name: install deps
           command: |
             #!/bin/bash
