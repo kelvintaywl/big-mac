@@ -21,8 +21,10 @@ jobs:
             mkdir m1
             mkfile -n 1g m1/tmp_1GB_dummy
             mkfile -n 5g m1/tmp_5GB_dummy
-            mkfile -n 1og m1/tmp_10GB_dummy
+            mkfile -n 10g m1/tmp_10GB_dummy
             ls -lah m1
+      # Fix attempt: https://support.circleci.com/hc/en-us/articles/19334402064027-Troubleshooting-slow-uploads-to-S3-for-jobs-using-an-m1-macOS-resource-class
+      - run: sudo sysctl net.inet.tcp.tso=0
       - run:
           name: upload to S3
           command: time aws s3 sync --only-show-errors m1 s3://kelvintaywl-macos-upload/
