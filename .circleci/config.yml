@@ -9,9 +9,12 @@ jobs:
     macos:
       xcode: 15.0
     resource_class: macos.m1.medium.gen1
+    environment:
+      AWS_PAGER: ""
     steps:
       - macos/install-rosetta
-      - aws-cli/install
+      - aws-cli/setup
+      - run: aws sts get-caller-identity
       - run:
           name: generate large files
           command: |
