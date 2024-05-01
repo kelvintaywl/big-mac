@@ -12,7 +12,7 @@ jobs:
     environment:
       AWS_PAGER: ""
     steps:
-      - macos/install-rosetta
+      # - macos/install-rosetta
       - aws-cli/setup
       - run: aws sts get-caller-identity
       - run:
