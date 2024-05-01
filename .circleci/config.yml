@@ -7,9 +7,18 @@ orbs:
 jobs:
   build:
     macos:
-      xcode: 14.2
-      resource_class: macos.m1.large.gen1
+      xcode: 15.0
+    resource_class: macos.m1.medium.gen1
     steps:
-      - macos/install-rosetta
       - aws-cli/install
-    
+      - run:
+          name: generate large files
+          command: |
+            mkdir m1
+            mkfile -n 1g m1/tmp_1GB_dummy
+            mkfile -n 5g m1/tmp_5GB_dummy
+            mkfile -n 1og m1/tmp_10GB_dummy
+            ls -lah m1
+      - run:
+          name: upload to S3
+          command: time aws s3 cp --only-show-errors m1 s3://kelvintaywl-macos-upload/
