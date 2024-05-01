@@ -22,4 +22,4 @@ jobs:
             ls -lah m1
       - run:
           name: upload to S3
-          command: time aws s3 cp --only-show-errors m1 s3://kelvintaywl-macos-upload/
+          command: time aws s3 sync --only-show-errors m1 s3://kelvintaywl-macos-upload/
