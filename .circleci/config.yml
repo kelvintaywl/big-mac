@@ -83,9 +83,7 @@ jobs:
       xcode: << parameters.xcode >>
     resource_class: << parameters.resource >>
     steps:
-      # - check-spec
-      # - switch-ruby-version
-      - add-password-to-keychain
+      - check-spec
 
 workflows:
   main:
@@ -98,4 +96,4 @@ workflows:
                 # - medium
                 - macos.m1.medium.gen1
               xcode:
-                - 15.3.0
+                - 13.4.1
