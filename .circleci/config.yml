@@ -5,6 +5,6 @@ jobs:
     macos:
       xcode: 14.3.1
     steps:
-      - run: defaults read com.apple.dt.Xcode DVTEnableCoreDevice
+      # - run: defaults read com.apple.dt.Xcode DVTEnableCoreDevice
       - run: defaults write com.apple.dt.Xcode DVTEnableCoreDevice enabled
-      - run: defaults read com.apple.dt.Xcode DVTEnableCoreDevice
+      # - run: defaults read com.apple.dt.Xcode DVTEnableCoreDevice
